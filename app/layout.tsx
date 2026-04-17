@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "추호승 — Frontend Developer",
-  description: "좋은 코드로 더 나은 경험을 만드는 프론트엔드 개발자입니다.",
+  title: "추호승 — Audiovisual Artist",
+  description: "사운드와 비주얼을 결합하는 오디오비주얼 아티스트 추호승의 포트폴리오.",
 };
 
 export default function RootLayout({

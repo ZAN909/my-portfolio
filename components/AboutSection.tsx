@@ -12,18 +12,18 @@ export default function AboutSection() {
 
       <div className="glass rounded-2xl p-8 transition-all duration-300">
         <p className="text-slate-300 leading-relaxed mb-5 text-lg">
-          안녕하세요. 사용자 경험을 중시하는 프론트엔드 개발자입니다.
-          클린한 코드와 직관적인 UI를 만드는 것을 즐깁니다.
+          안녕하세요. 사운드 작업과 비주얼을 결합하는 오디오비주얼 아티스트 추호승입니다.
+          소리와 이미지가 교차하는 순간, 새로운 감각적 경험을 만들어냅니다.
         </p>
         <p className="text-slate-400 leading-relaxed">
-          관심 분야: 웹 성능 최적화, 접근성, 오픈소스 기여
+          관심 분야: 사운드 디자인, 라이브 퍼포먼스, 실험적 비주얼
         </p>
 
         <div className="mt-8 pt-6 border-t border-white/10 grid grid-cols-3 gap-6 text-center">
           {[
-            { value: "3+", label: "Years Exp." },
-            { value: "20+", label: "Projects" },
-            { value: "10+", label: "Open Source" },
+            { value: "AV", label: "Artist" },
+            { value: "🎵", label: "Sound" },
+            { value: "🎨", label: "Visual" },
           ].map(({ value, label }) => (
             <div key={label}>
               <div className="text-2xl font-bold gradient-text">{value}</div>

@@ -26,14 +26,14 @@ export default function HeroSection() {
           className="animate-fade-up text-xl sm:text-2xl text-slate-300 mb-3 font-light"
           style={{ animationDelay: "0.2s", opacity: 0 }}
         >
-          Frontend Developer
+          Audiovisual Artist
         </p>
 
         <p
           className="animate-fade-up text-base text-slate-400 mb-10 max-w-md leading-relaxed"
           style={{ animationDelay: "0.3s", opacity: 0 }}
         >
-          좋은 코드로 더 나은 경험을 만듭니다.
+          사운드와 비주얼이 만나는 순간을 만들어냅니다.
         </p>
 
         <div
