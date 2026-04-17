@@ -16,7 +16,7 @@ export default function AboutSection() {
             </div>
             <div className="border-b border-white/20 pb-4 mb-4">
               <div className="text-xs opacity-50 mb-1">NAME</div>
-              <div className="text-2xl font-bold tracking-wider">추호승</div>
+              <div className="text-3xl tracking-wider" style={{ fontFamily: "var(--font-vt323)" }}>추호승</div>
               <div className="text-xs opacity-50 mt-1">CHU HO-SEUNG</div>
             </div>
             <div className="grid grid-cols-2 gap-4 text-xs">
@@ -47,7 +47,7 @@ export default function AboutSection() {
 
           {/* Bio */}
           <div>
-            <h2 className="text-3xl sm:text-4xl font-bold leading-tight mb-8 uppercase">
+            <h2 className="text-5xl sm:text-6xl leading-tight mb-8 uppercase" style={{ fontFamily: "var(--font-vt323)" }}>
               SOUND &<br />VISUAL<br />ARTIST
             </h2>
             <p className="text-sm leading-loose opacity-80 mb-6">

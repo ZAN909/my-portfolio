@@ -20,7 +20,7 @@ export default function ContactSection() {
           [ 04 / CONTACT ]
         </div>
 
-        <h2 className="text-4xl sm:text-6xl font-bold uppercase leading-tight mb-16">
+        <h2 className="text-6xl sm:text-8xl uppercase leading-tight mb-16" style={{ fontFamily: "var(--font-vt323)" }}>
           LET&apos;S<br />WORK<br />TOGETHER.
         </h2>
 

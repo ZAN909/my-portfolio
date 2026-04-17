@@ -20,7 +20,8 @@ export default function HeroSection() {
         {/* Name with glitch */}
         <div className="relative mb-8">
           <h1
-            className="glitch-wrapper text-[clamp(3.5rem,12vw,9rem)] font-bold leading-none tracking-tight uppercase"
+            className="glitch-wrapper text-[clamp(4rem,12vw,10rem)] leading-none tracking-tight uppercase"
+            style={{ fontFamily: "var(--font-vt323)" }}
             data-text="추호승"
           >
             추호승
