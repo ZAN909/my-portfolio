@@ -184,7 +184,7 @@ export default function HeroSection() {
       {/* Bottom info bar */}
       <div className="relative z-10 flex items-center justify-between px-6 py-3 border-t border-[#1a1a1a] text-xs text-[#333] uppercase tracking-widest">
         <span>KR / SEOUL</span>
-        <span>VHS</span>
+        <span>추호승</span>
         <span className="hidden sm:block">AUDIO · VISUAL · PERFORMANCE</span>
       </div>
     </section>

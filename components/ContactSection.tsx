@@ -14,8 +14,8 @@ const LINKS = [
   },
   {
     label: "YOUTUBE",
-    value: "@VHS-w5r",
-    href: "https://www.youtube.com/@VHS-w5r",
+    value: "@추호승-w5r",
+    href: "https://www.youtube.com/@추호승-w5r",
   },
   {
     label: "PORTFOLIO",
@@ -57,7 +57,7 @@ export default function ContactSection() {
         </div>
 
         <div className="mt-16 pt-8 border-t border-white/20 flex justify-between text-xs opacity-40 uppercase tracking-widest">
-          <span>VHS</span>
+          <span>추호승</span>
           <span>AUDIOVISUAL ARTIST</span>
         </div>
       </div>
