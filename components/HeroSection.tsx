@@ -25,6 +25,7 @@ export default function HeroSection() {
       overlay.classList.add('blackout-active');
       content.classList.add('content-glitching');
       sysErr.classList.add('sys-error-active');
+      window.dispatchEvent(new CustomEvent('glitch-trigger'));
     };
 
     const id = setInterval(trigger, 15000);

@@ -101,10 +101,14 @@ function buildRow(
 }
 
 export default function ParticleCanvas() {
+  const GLITCH_INTERVAL = 15; // seconds — must match HeroSection interval
+
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const rowsRef = useRef<Row[]>([]);
   const rafRef = useRef<number>(0);
   const frameRef = useRef<number>(0);
+  const glitchTimeRef = useRef<number>(GLITCH_INTERVAL); // start at max so first cycle is full
+  const lastFrameTimeRef = useRef<number>(0);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -127,7 +131,20 @@ export default function ParticleCanvas() {
     requestAnimationFrame(init);
     window.addEventListener('resize', init);
 
-    const tick = () => {
+    const onGlitch = () => { glitchTimeRef.current = 0; };
+    window.addEventListener('glitch-trigger', onGlitch);
+
+    const tick = (timestamp: number) => {
+      const dt = lastFrameTimeRef.current
+        ? (timestamp - lastFrameTimeRef.current) / 1000
+        : 0;
+      lastFrameTimeRef.current = timestamp;
+
+      glitchTimeRef.current = Math.min(glitchTimeRef.current + dt, GLITCH_INTERVAL);
+      const t = glitchTimeRef.current / GLITCH_INTERVAL;
+      // 0.5x(slow) → 1.0x(full) with 4th-power exponential curve
+      const cycleSpeedMult = 0.5 + 0.5 * Math.pow(t, 4);
+
       frameRef.current++;
       const frame = frameRef.current;
 
@@ -143,7 +160,7 @@ export default function ParticleCanvas() {
         // Gradually ease speedMult back toward 1
         row.speedMult += (1.0 - row.speedMult) * 0.01;
 
-        row.offset += row.baseSpeed * row.speedMult * row.direction;
+        row.offset += row.baseSpeed * row.speedMult * cycleSpeedMult * row.direction;
         if (row.offset >= row.unitWidth) row.offset -= row.unitWidth;
         if (row.offset < 0) row.offset += row.unitWidth;
 
@@ -171,11 +188,12 @@ export default function ParticleCanvas() {
 
       rafRef.current = requestAnimationFrame(tick);
     };
-    tick();
+    rafRef.current = requestAnimationFrame(tick);
 
     return () => {
       cancelAnimationFrame(rafRef.current);
       window.removeEventListener('resize', init);
+      window.removeEventListener('glitch-trigger', onGlitch);
     };
   }, []);
 
