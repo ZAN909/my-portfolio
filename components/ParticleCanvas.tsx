@@ -70,7 +70,7 @@ function buildRow(
   while (totalW < screenWidth * 1.5) {
     const word = words[i % words.length];
     const w = ctx.measureText(word).width;
-    const interval = 3 + Math.floor(Math.random() * 12); // 3–14 frames per snap
+    const interval = 20 + Math.floor(Math.random() * 60); // 20–79 frames per snap
     unitItems.push({
       text: word,
       highlight: Math.random() < HIGHLIGHT_CHANCE
