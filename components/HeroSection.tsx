@@ -9,22 +9,26 @@ export default function HeroSection() {
   const blackoutRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const sysErrorRef = useRef<HTMLDivElement>(null);
+  const welcomeRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const trigger = () => {
       const overlay = blackoutRef.current;
       const content = contentRef.current;
       const sysErr = sysErrorRef.current;
-      if (!overlay || !content || !sysErr) return;
+      const welcome = welcomeRef.current;
+      if (!overlay || !content || !sysErr || !welcome) return;
 
       overlay.classList.remove('blackout-active');
       content.classList.remove('content-glitching');
       sysErr.classList.remove('sys-error-active');
+      welcome.classList.remove('welcome-active');
       void overlay.offsetWidth;
 
       overlay.classList.add('blackout-active');
       content.classList.add('content-glitching');
       sysErr.classList.add('sys-error-active');
+      welcome.classList.add('welcome-active');
       window.dispatchEvent(new CustomEvent('glitch-trigger'));
     };
 
@@ -57,6 +61,29 @@ export default function HeroSection() {
         </div>
         <div className="text-[#FF2200] text-xs uppercase tracking-[0.3em] mt-2 opacity-70">
           ERR_CODE: 0x0033FF — SIGNAL LOST
+        </div>
+      </div>
+
+      {/* Welcome ASCII */}
+      <div
+        ref={welcomeRef}
+        className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none"
+        style={{ zIndex: 16, opacity: 0 }}
+      >
+        <div className="text-[#00FFAA] text-xs tracking-widest mb-4" style={{ fontFamily: 'var(--font-space-mono)' }}>
+          ╔══════════════════════════════════╗
+        </div>
+        <div className="text-[#00FFAA] text-xs tracking-widest" style={{ fontFamily: 'var(--font-space-mono)' }}>
+          ║{'  '}SYS://RESTORED — ONLINE{'  '}║
+        </div>
+        <div className="text-[#00FFAA] text-[clamp(3rem,8vw,6rem)] tracking-[0.3em] my-3" style={{ fontFamily: 'var(--font-vt323)' }}>
+          W E L C O M E
+        </div>
+        <div className="text-[#00FFAA] text-xs tracking-widest mb-1 opacity-80" style={{ fontFamily: 'var(--font-space-mono)' }}>
+          ║{'  '}USER: VISITOR_01 {'  '}CLEARANCE: GRANTED{'  '}║
+        </div>
+        <div className="text-[#00FFAA] text-xs tracking-widest mt-4" style={{ fontFamily: 'var(--font-space-mono)' }}>
+          ╚══════════════════════════════════╝
         </div>
       </div>
 
