@@ -171,10 +171,15 @@ export default function ParticleCanvas() {
           if (x + item.width < 0 || x > canvas.width) continue;
 
           if (item.highlight) {
+            const flicker = Math.max(0.05, Math.min(1,
+              0.5 + 0.4 * Math.sin(timestamp * 0.003 + item.x * 0.02)
+                  + 0.1 * Math.sin(timestamp * 0.017 + item.x * 0.05)
+            ));
             const pad = 2;
+            ctx.globalAlpha = flicker;
             ctx.fillStyle = item.highlight;
             ctx.fillRect(x - pad, row.y - FONT_SIZE, item.width + pad * 2, FONT_SIZE + 4);
-            ctx.globalAlpha = 1;
+            ctx.globalAlpha = flicker;
             ctx.fillStyle = '#000000';
           } else {
             ctx.globalAlpha = 0.5;
