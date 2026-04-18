@@ -5,6 +5,7 @@ export type Skill = {
 
 export const SKILLS: Skill[] = [
   { name: "TouchDesigner", category: "visual" },
+  { name: "Resolume Arena", category: "visual" },
   { name: "Projection Mapping", category: "visual" },
   { name: "Generative Visual", category: "visual" },
   { name: "Ableton Live", category: "sound" },
