@@ -2,11 +2,10 @@
 
 import { useEffect, useRef } from 'react';
 
-const PARTICLE_COUNT = 100;
-const REPEL_RADIUS = 100;
-const REPEL_STRENGTH = 5;
-const SPRING = 0.05;
-const DAMPING = 0.85;
+const REPEL_RADIUS = 120;
+const REPEL_STRENGTH = 6;
+const SPRING = 0.1;
+const DAMPING = 0.88;
 const RGB_CHANNELS = [
   { color: '#FF2200', dx: -2, dy: -1 },
   { color: '#0033FF', dx:  0, dy:  0 },
@@ -31,19 +30,20 @@ type Particle = {
 };
 
 function initParticles(width: number, height: number): Particle[] {
-  return Array.from({ length: PARTICLE_COUNT }, () => {
-    const x = Math.random() * width;
-    const y = Math.random() * height;
+  if (width === 0 || height === 0) return [];
+  const cols = Math.floor(width / 55);
+  const rows = Math.floor(height / 38);
+  return Array.from({ length: cols * rows }, (_, i) => {
+    const col = i % cols;
+    const row = Math.floor(i / cols);
+    const x = (col + 0.5) * (width / cols) + (Math.random() - 0.5) * 16;
+    const y = (row + 0.5) * (height / rows) + (Math.random() - 0.5) * 12;
     return {
-      x,
-      y,
-      homeX: x,
-      homeY: y,
-      vx: 0,
-      vy: 0,
+      x, y, homeX: x, homeY: y,
+      vx: 0, vy: 0,
       char: CHARS[Math.floor(Math.random() * CHARS.length)],
       size: 10 + Math.floor(Math.random() * 5),
-      opacity: 0.4 + Math.random() * 0.3,
+      opacity: 0.35 + Math.random() * 0.3,
     };
   });
 }
@@ -61,11 +61,15 @@ export default function ParticleCanvas() {
     if (!ctx) return;
 
     const resize = () => {
-      canvas.width = canvas.offsetWidth;
-      canvas.height = canvas.offsetHeight;
-      particlesRef.current = initParticles(canvas.width, canvas.height);
+      const w = canvas.offsetWidth || window.innerWidth;
+      const h = canvas.offsetHeight || window.innerHeight;
+      canvas.width = w;
+      canvas.height = h;
+      particlesRef.current = initParticles(w, h);
     };
-    resize();
+
+    // 레이아웃이 완전히 잡힌 뒤 초기화
+    requestAnimationFrame(resize);
 
     const onMouseMove = (e: MouseEvent) => {
       const rect = canvas.getBoundingClientRect();
