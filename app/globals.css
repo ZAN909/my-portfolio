@@ -97,6 +97,16 @@ body::before {
   animation-delay: 0.7s;
 }
 
+@keyframes bg-glitch {
+  0%, 90%, 100% { transform: translate(0, 0); opacity: 1; }
+  91% { transform: translate(-3px, 0); opacity: 0.9; }
+  92% { transform: translate(3px, 1px); opacity: 1; }
+  93% { transform: translate(-2px, -1px); opacity: 0.85; }
+  94% { transform: translate(0, 0); opacity: 1; }
+}
+
+.animate-bg-glitch { animation: bg-glitch 6s infinite; }
+
 .cyber-border {
   border: 1px solid #0033FF;
 }

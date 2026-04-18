@@ -8,6 +8,8 @@ export default function HeroSection() {
   return (
     <section className="relative flex flex-col min-h-screen bg-[#0a0a0a] overflow-hidden">
       <ParticleCanvas />
+      {/* Dark overlay */}
+      <div className="absolute inset-0" style={{ zIndex: 1, background: 'rgba(10,10,10,0.58)' }} />
       {/* Top status bar */}
       <div className="relative z-10 flex items-center justify-between px-6 py-3 border-b border-[#0033FF] text-xs text-[#0033FF] uppercase tracking-widest">
         <span>SYS://PORTFOLIO.V1</span>

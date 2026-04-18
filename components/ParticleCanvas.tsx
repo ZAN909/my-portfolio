@@ -164,8 +164,8 @@ export default function ParticleCanvas() {
   return (
     <canvas
       ref={canvasRef}
-      className="absolute inset-0 w-full h-full"
-      style={{ zIndex: 0 }}
+      className="absolute inset-0 w-full h-full animate-bg-glitch"
+      style={{ zIndex: 0, filter: 'blur(1px)' }}
     />
   );
 }
