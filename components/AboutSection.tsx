@@ -39,6 +39,10 @@ export default function AboutSection() {
                   ACTIVE
                 </div>
               </div>
+              <div className="col-span-2">
+                <div className="opacity-50 mb-1">LECTURE</div>
+                <div>강서대 · 정화예대 · 상상마당 아카데미</div>
+              </div>
             </div>
             <div className="mt-4 pt-4 border-t border-white/20 text-xs opacity-40 uppercase tracking-widest text-center">
               AUDIOVISUAL ARTIST / 오디오비주얼 아티스트
