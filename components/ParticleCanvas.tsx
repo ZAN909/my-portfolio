@@ -201,7 +201,7 @@ export default function ParticleCanvas() {
     <canvas
       ref={canvasRef}
       className="absolute inset-0 w-full h-full"
-      style={{ zIndex: 0, filter: 'blur(1px)' }}
+      style={{ zIndex: 0, filter: 'blur(0.5px)' }}
     />
   );
 }
