@@ -4,7 +4,6 @@ import { useEffect, useRef } from 'react';
 
 const FONT_SIZE = 10;
 const LINE_HEIGHT = 14;
-const GAP = 5;
 const HIGHLIGHT_CHANCE = 0.38;
 const HIGHLIGHT_COLORS = ['#0033FF', '#FF2200', '#00FFAA', '#00CFFF', '#FFD700', '#00FF41', '#00FF41', '#00FF41'];
 
@@ -27,6 +26,9 @@ type WordItem = {
   highlight: string | null;
   x: number;
   width: number;
+  flickerOpacity: number;
+  flickerNext: number;   // frame count to next snap
+  flickerInterval: number; // frames between snaps (per-word randomized)
 };
 
 type Row = {
@@ -57,6 +59,9 @@ function buildRow(
 ): Row {
   ctx.font = `${FONT_SIZE}px "Space Mono", monospace`;
 
+  // Each row gets its own gap: tight (2px) to loose (14px)
+  const gap = 2 + Math.floor(Math.random() * 13);
+
   const words = shuffle(WORD_POOL);
   let totalW = 0;
   const unitItems: WordItem[] = [];
@@ -65,6 +70,7 @@ function buildRow(
   while (totalW < screenWidth * 1.5) {
     const word = words[i % words.length];
     const w = ctx.measureText(word).width;
+    const interval = 3 + Math.floor(Math.random() * 12); // 3–14 frames per snap
     unitItems.push({
       text: word,
       highlight: Math.random() < HIGHLIGHT_CHANCE
@@ -72,8 +78,11 @@ function buildRow(
         : null,
       x: totalW,
       width: w,
+      flickerOpacity: Math.random(),
+      flickerNext: Math.floor(Math.random() * interval),
+      flickerInterval: interval,
     });
-    totalW += w + GAP;
+    totalW += w + gap;
     i++;
   }
 
@@ -101,13 +110,13 @@ function buildRow(
 }
 
 export default function ParticleCanvas() {
-  const GLITCH_INTERVAL = 15; // seconds — must match HeroSection interval
+  const GLITCH_INTERVAL = 15;
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const rowsRef = useRef<Row[]>([]);
   const rafRef = useRef<number>(0);
   const frameRef = useRef<number>(0);
-  const glitchTimeRef = useRef<number>(GLITCH_INTERVAL); // start at max so first cycle is full
+  const glitchTimeRef = useRef<number>(GLITCH_INTERVAL);
   const lastFrameTimeRef = useRef<number>(0);
 
   useEffect(() => {
@@ -142,7 +151,6 @@ export default function ParticleCanvas() {
 
       glitchTimeRef.current = Math.min(glitchTimeRef.current + dt, GLITCH_INTERVAL);
       const t = glitchTimeRef.current / GLITCH_INTERVAL;
-      // 0.5x(slow) → 1.0x(full) with 4th-power exponential curve
       const cycleSpeedMult = 0.5 + 0.5 * Math.pow(t, 4);
 
       frameRef.current++;
@@ -152,12 +160,10 @@ export default function ParticleCanvas() {
       ctx.font = `${FONT_SIZE}px "Space Mono", monospace`;
 
       for (const row of rowsRef.current) {
-        // Random speed variation
         if (frame >= row.nextSpeedChange) {
           row.speedMult = 0.2 + Math.random() * 2.5;
           row.nextSpeedChange = frame + 60 + Math.floor(Math.random() * 200);
         }
-        // Gradually ease speedMult back toward 1
         row.speedMult += (1.0 - row.speedMult) * 0.01;
 
         row.offset += row.baseSpeed * row.speedMult * cycleSpeedMult * row.direction;
@@ -171,15 +177,16 @@ export default function ParticleCanvas() {
           if (x + item.width < 0 || x > canvas.width) continue;
 
           if (item.highlight) {
-            const flicker = Math.max(0.05, Math.min(1,
-              0.5 + 0.4 * Math.sin(timestamp * 0.003 + item.x * 0.02)
-                  + 0.1 * Math.sin(timestamp * 0.017 + item.x * 0.05)
-            ));
+            // Sample-and-hold: snap to new random opacity every flickerInterval frames
+            if (frame >= item.flickerNext) {
+              item.flickerOpacity = Math.random();
+              item.flickerNext = frame + item.flickerInterval;
+            }
             const pad = 2;
-            ctx.globalAlpha = flicker;
+            ctx.globalAlpha = item.flickerOpacity;
             ctx.fillStyle = item.highlight;
             ctx.fillRect(x - pad, row.y - FONT_SIZE, item.width + pad * 2, FONT_SIZE + 4);
-            ctx.globalAlpha = flicker;
+            ctx.globalAlpha = item.flickerOpacity;
             ctx.fillStyle = '#000000';
           } else {
             ctx.globalAlpha = 0.5;
