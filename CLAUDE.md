@@ -8,10 +8,11 @@
 오디오비주얼 아티스트 추호승(VHS)의 포트폴리오 웹페이지. 레트로-디지털 / 사이버펑크 미학으로 작업, 퍼포먼스, 전시 이력을 효과적으로 보여주는 것이 목표.
 
 ## 기술 스택
-- **Next.js** (App Router)
-- **Tailwind CSS**
+- **Next.js 16** (App Router, Static Export)
+- **Tailwind CSS v4**
 - **TypeScript**
-- 배포: Vercel
+- **Canvas API** (파티클 인터랙션)
+- 배포: GitHub Pages (GitHub Actions 자동 배포)
 
 ## 페이지 구성
 1. **Hero** — 이름(추호승/VHS), 직함, 한 줄 소개, CTA 버튼 (Contact / Resume)
